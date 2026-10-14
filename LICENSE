@@ -1,0 +1,47 @@
+MIT License
+
+Copyright (c) 2025 Z.ai
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+Примечание к лицензии (на русском языке)
+
+Лицензия MIT применяется к оригинальным материалам этого проекта:
+исходному коду скриптов сборки PDF, структуре Jupyter Notebook, тексту
+README и сопроводительным файлам.
+
+Перед публикацией убедитесь, что лицензия MIT совместима с правами на все
+включённые в проект материалы:
+
+- Тексты и примеры кода, написанные автором проекта, — распространяются под
+  MIT без ограничений.
+- Цитаты из официальной документации библиотек (pandas, pyarrow, openpyxl,
+  matplotlib, seaborn) — используются в учебных целях со ссылкой на
+  первоисточник. Эти библиотеки распространяются под собственными лицензиями
+  (BSD-3-Clause, Apache-2.0 и др.), которые совместимы с MIT.
+- Если в проект включаются материалы третьих лиц (иллюстрации, фрагменты
+  статей, наборы данных), проверьте их лицензию и укажите источник. При
+  несовместимости лицензий — замените такие материалы на оригинальные или
+  распространяйте их отдельно.
+
+Лицензия не предоставляет гарантий. Программное обеспечение предоставляется
+"как есть". Авторы не несут ответственности за возможные проблемы,
+возникшие при использовании.

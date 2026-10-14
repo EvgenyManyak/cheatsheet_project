@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Python · Excel, CSV, Parquet — учебная шпаргалка</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  @page { size: 794px 1123px; margin: 0; }
+  html, body {
+    margin: 0; padding: 0; background: #FFFFFF;
+    font-family: 'Inter', sans-serif; color: #1A1A1A;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .cover {
+    position: relative; width: 794px; height: 1123px;
+    overflow: hidden; background: #FFFFFF;
+  }
+  .top-band { position: absolute; top: 0; left: 0; width: 794px; height: 110px; background: #1F3A5F; z-index: 1; }
+  .left-stripe { position: absolute; top: 110px; left: 0; width: 12px; height: 957px; background: linear-gradient(180deg, #1F3A5F, #2F5A8F); z-index: 1; }
+  .bottom-band { position: absolute; bottom: 0; left: 0; width: 794px; height: 56px; background: #1F3A5F; z-index: 1; }
+
+  .accent-line-h1 { position: absolute; top: 555px; left: 70px; width: 654px; height: 1.5px; background: #1F3A5F; z-index: 2; }
+  .accent-line-h2 { position: absolute; top: 920px; left: 70px; width: 654px; height: 1.5px; background: #1F3A5F; z-index: 2; }
+
+  .top-label { position: absolute; top: 50px; left: 70px; color: #FFFFFF; font-size: 13px; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; line-height: 1; z-index: 3; }
+  .top-label-dim { color: rgba(255,255,255,0.55); font-weight: 400; margin-left: 14px; }
+  .top-meta-right { position: absolute; top: 50px; right: 70px; color: rgba(255,255,255,0.75); font-size: 12px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; line-height: 1; z-index: 3; }
+
+  .kicker { position: absolute; top: 195px; left: 70px; font-size: 14px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: #5C6470; line-height: 1; z-index: 3; }
+
+  .title { position: absolute; top: 225px; left: 70px; width: 654px; color: #1F3A5F; line-height: 1.05; z-index: 3; }
+  .title-line1 { font-size: 32px; font-weight: 500; color: #5C6470; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; line-height: 1; }
+  .title-line2 { font-size: 60px; font-weight: 900; color: #1F3A5F; line-height: 1.02; letter-spacing: -2px; margin-bottom: 14px; }
+  .title-line2 .accent { color: #4A7FBA; }
+  .title-line3 { font-size: 24px; font-weight: 400; color: #1A1A1A; letter-spacing: -0.3px; line-height: 1.2; }
+
+  /* Подзаголовок «Восемь разделов» — под фразой «Подключение…» */
+  .subtitle { position: absolute; top: 498px; left: 70px; width: 654px; font-size: 13px; font-weight: 400; line-height: 1.45; color: #1A1A1A; z-index: 3; }
+  .subtitle strong { color: #1F3A5F; font-weight: 600; }
+
+  /* ─── Блок «Форматы и файлы» ─── */
+  .formats-block {
+    position: absolute; top: 570px; left: 70px; width: 654px; height: 150px;
+    background: #F4F6F8; border: 1px solid #D0D7DE; border-radius: 4px; z-index: 1;
+  }
+  .formats-title {
+    position: absolute; top: 582px; left: 90px;
+    font-size: 10px; font-weight: 700; color: #1F3A5F;
+    letter-spacing: 2px; text-transform: uppercase; z-index: 3;
+  }
+  .formats-row {
+    position: absolute; top: 605px; left: 70px; width: 654px; height: 110px;
+    display: flex; align-items: center; justify-content: space-around;
+    padding: 0 50px; box-sizing: border-box; z-index: 3;
+  }
+  .icon-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .icon-item img { width: 52px; height: 52px; display: block; }
+  .icon-label { font-size: 11px; font-weight: 700; color: #1F3A5F; letter-spacing: 0.5px; text-transform: uppercase; line-height: 1; font-family: 'JetBrains Mono', monospace; }
+  .icon-desc { font-size: 9px; font-weight: 400; color: #5C6470; line-height: 1.1; letter-spacing: 0.3px; }
+
+  /* ─── Блок «Инструменты и среды» ─── */
+  .tools-block {
+    position: absolute; top: 745px; left: 70px; width: 654px; height: 150px;
+    background: #F4F6F8; border: 1px solid #D0D7DE; border-radius: 4px; z-index: 1;
+  }
+  .tools-title {
+    position: absolute; top: 757px; left: 90px;
+    font-size: 10px; font-weight: 700; color: #1F3A5F;
+    letter-spacing: 2px; text-transform: uppercase; z-index: 3;
+  }
+  .tools-row {
+    position: absolute; top: 780px; left: 70px; width: 654px; height: 110px;
+    display: flex; align-items: center; justify-content: space-around;
+    padding: 0 50px; box-sizing: border-box; z-index: 3;
+  }
+
+  /* ─── Метаданные ─── */
+  .meta { position: absolute; top: 940px; left: 70px; width: 654px; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 24px; color: #5C6470; line-height: 1.5; z-index: 3; }
+  .meta-item { border-left: 2px solid #1F3A5F; padding-left: 12px; }
+  .meta-label { color: #1F3A5F; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; font-size: 10px; margin-bottom: 6px; display: block; line-height: 1; }
+  .meta-value { color: #1A1A1A; font-size: 12.5px; font-weight: 500; line-height: 1.4; }
+
+  .footer { position: absolute; bottom: 18px; left: 70px; right: 70px; display: flex; justify-content: space-between; align-items: center; color: #FFFFFF; font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; line-height: 1; z-index: 3; }
+  .footer-left { color: rgba(255,255,255,0.95); display: flex; align-items: center; }
+  .footer-mark { display: inline-block; width: 6px; height: 6px; background: #B25435; margin-right: 12px; }
+  .footer-right { color: rgba(255,255,255,0.7); }
+</style>
+</head>
+<body>
+<div class="cover">
+  <div class="top-band"></div>
+  <div class="left-stripe"></div>
+  <div class="bottom-band"></div>
+  <div class="accent-line-h1"></div>
+  <div class="accent-line-h2"></div>
+
+  <div class="top-label">УЧЕБНЫЙ МАТЕРИАЛ<span class="top-label-dim">· 2025</span></div>
+  <div class="top-meta-right">PDF · ОТКРЫТАЯ ПУБЛИКАЦИЯ</div>
+
+  <div class="kicker">Шпаргалка для аналитика данных</div>
+
+  <div class="title">
+    <div class="title-line1">Python</div>
+    <div class="title-line2"><span class="accent">Excel</span> · CSV · <span class="accent">Parquet</span></div>
+    <div class="title-line3">Подключение, очистка, визуализация и сохранение</div>
+  </div>
+
+  <!-- «Восемь разделов» — под фразой «Подключение…», над линией -->
+  <div class="subtitle">
+    <strong>Восемь разделов</strong> с пошаговыми примерами, кодом, проверками результата и блоками «Совет · Внимание · Примечание» для каждой темы.
+  </div>
+
+  <!-- Блок «Форматы и файлы» — только XLSX, CSV, Parquet -->
+  <div class="formats-block"></div>
+  <div class="formats-title">Форматы и файлы</div>
+  <div class="formats-row">
+    <div class="icon-item">
+      <img src="../build/cover_icons/excel.png" alt="Excel">
+      <span class="icon-label">XLSX</span>
+      <span class="icon-desc">openpyxl</span>
+    </div>
+    <div class="icon-item">
+      <img src="../build/cover_icons/csv.png" alt="CSV">
+      <span class="icon-label">CSV</span>
+      <span class="icon-desc">utf-8 · cp1251</span>
+    </div>
+    <div class="icon-item">
+      <img src="../build/cover_icons/parquet.png" alt="Parquet">
+      <span class="icon-label">Parquet</span>
+      <span class="icon-desc">pyarrow</span>
+    </div>
+  </div>
+
+  <!-- Блок «Инструменты и среды» — Python, Jupyter, Colab -->
+  <div class="tools-block"></div>
+  <div class="tools-title">Инструменты и среды</div>
+  <div class="tools-row">
+    <div class="icon-item">
+      <img src="../build/cover_icons/python.png" alt="Python">
+      <span class="icon-label">Python</span>
+      <span class="icon-desc">pandas · numpy</span>
+    </div>
+    <div class="icon-item">
+      <img src="../build/cover_icons/jupyter.png" alt="Jupyter">
+      <span class="icon-label">Jupyter</span>
+      <span class="icon-desc">Notebook · Lab</span>
+    </div>
+    <div class="icon-item">
+      <img src="../build/cover_icons/colab.png" alt="Colab">
+      <span class="icon-label">Colab</span>
+      <span class="icon-desc">Google Drive</span>
+    </div>
+  </div>
+
+  <!-- Метаданные -->
+  <div class="meta">
+    <div class="meta-item">
+      <span class="meta-label">Аудитория</span>
+      <div class="meta-value">Аналитик данных<br>с опытом Python</div>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Уровень</span>
+      <div class="meta-value">Средний · без<br>базового синтаксиса</div>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Структура</span>
+      <div class="meta-value">8 разделов ·<br>итоговый чек-лист</div>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Объём</span>
+      <div class="meta-value">50+ страниц ·<br>13 примеров кода</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left"><span class="footer-mark"></span>Z.AI · УЧЕБНЫЙ МАТЕРИАЛ</div>
+    <div class="footer-right">VERSION 1.0 · MIT LICENSE</div>
+  </div>
+</div>
+</body>
+</html>
